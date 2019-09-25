@@ -2,6 +2,7 @@
 
 [在线案例](https://codesandbox.io/s/react-antd-sku-nopor)
 
+![ss](./sku.jpg)
 ```jsx
 <Sku
   ref={this.skuRef}

@@ -1,6 +1,6 @@
 {
   "name": "react-antd-sku",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sku component for react antd",
   "main": "./dist/index.js",
   "module": "./dist/es/index.js",
