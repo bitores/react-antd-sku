@@ -54,16 +54,16 @@ export default class extends Component {
     let needInit = false;
 
     if (disabled !== this.state.disabled) {
-      update = Object.assign(update, { disabled })
+      update = Object.assign(update, { disabled });
     }
 
     if (!deepCompare(skuPropsList, this.state.skuPropsList)) {
-      update = Object.assign(update, { skuPropsList })
+      update = Object.assign(update, { skuPropsList });
     }
 
     if (!deepCompare(skuPropVoList, this.state.skuPropVoList)) {
       needInit = true;
-      update = Object.assign(update, { skuPropVoList })
+      update = Object.assign(update, { skuPropVoList });
     }
 
     this.setState(update, () => {
@@ -114,9 +114,11 @@ export default class extends Component {
       // 有tag的属性生成表头
       if (tags.length > 0) {
         // 记录表头
-        skuTableColumns.push(Object.assign(tmpSkuColumns[i], {
-          dataIndex: `validPropColumn_${validPropsCount}`
-        }));
+        skuTableColumns.push(
+          Object.assign(tmpSkuColumns[i], {
+            dataIndex: `validPropColumn_${validPropsCount}`
+          })
+        );
         // 记录有效的属性(有tag的)个数
         validPropsCount++;
         // 记录所有tag
@@ -352,68 +354,68 @@ export default class extends Component {
       <div key={`id_${singleProp.key}`}>
         <Row>
           <Col span={8}>
-            {/* <FormItem> */}
-            <div
-              onMouseDown={e => {
-                e.preventDefault();
-                return false;
-              }}
-            >
-              {getFieldDecorator(singleProp.key, {
-                initialValue: singleProp.id,
-                rules: [{ required: true, message: "必填属性或删除" }]
-              })(
-                <Select
-                  style={{ width: "100%" }}
-                  placeholder="请选择属性"
-                  optionFilterProp="children"
-                  showSearch={true}
-                  onChange={v => {
-                    this.setCurrentProp(v, index, true);
-                  }}
-                  dropdownRender={menu => (
-                    <div
-                      onClick={() => {
-                        return false;
-                      }}
-                    >
-                      {menu}
-                      <Divider style={{ margin: "4px 0" }} />
+            <FormItem>
+              <div
+                onMouseDown={e => {
+                  e.preventDefault();
+                  return false;
+                }}
+              >
+                {getFieldDecorator(singleProp.key, {
+                  initialValue: singleProp.id,
+                  rules: [{ required: true, message: "必填属性或删除" }]
+                })(
+                  <Select
+                    style={{ width: "100%" }}
+                    placeholder="请选择属性"
+                    optionFilterProp="children"
+                    showSearch={true}
+                    onChange={v => {
+                      this.setCurrentProp(v, index, true);
+                    }}
+                    dropdownRender={menu => (
                       <div
-                        style={{ padding: "8px", cursor: "pointer" }}
-                        onClick={e => {
-                          this.setState(
-                            {
-                              editProp: {
-                                index,
-                                key: singleProp.key
-                              }
-                            },
-                            () => {
-                              this.props.addProp && this.props.addProp(index);
-                            }
-                          );
+                        onClick={() => {
                           return false;
                         }}
                       >
-                        <Icon type="plus" /> 新增
+                        {menu}
+                        <Divider style={{ margin: "4px 0" }} />
+                        <div
+                          style={{ padding: "8px", cursor: "pointer" }}
+                          onClick={e => {
+                            this.setState(
+                              {
+                                editProp: {
+                                  index,
+                                  key: singleProp.key
+                                }
+                              },
+                              () => {
+                                this.props.addProp && this.props.addProp(index);
+                              }
+                            );
+                            return false;
+                          }}
+                        >
+                          <Icon type="plus" /> 新增
                       </div>
-                    </div>
-                  )}
-                >
-                  {skuPropsList.map(prop => (
-                    <Select.Option
-                      value={prop.id}
-                      key={`${prop.id}_${prop.propertyName}`}
-                      disabled={tmpSkuProps.some(item => item.id === prop.id)}
-                    >
-                      {prop.propertyName}
-                    </Select.Option>
-                  ))}
-                </Select>
-              )}
-            </div>
-            {/* </FormItem> */}
+                      </div>
+                    )}
+                  >
+                    {skuPropsList.map(prop => (
+                      <Select.Option
+                        value={prop.id}
+                        key={`${prop.id}_${prop.propertyName}`}
+                        disabled={tmpSkuProps.some(item => item.id === prop.id)}
+                      >
+                        {prop.propertyName}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                )}
+              </div>
+            </FormItem>
           </Col>
           <Col span={1}>
             <Icon
@@ -500,7 +502,7 @@ export default class extends Component {
         </Row>
       </div>
     );
-  };
+  }
 
   _renderSkuTable() {
     const { skuTableDataSource, skuTableColumns, tmpSkuProps } = this.state;
@@ -520,11 +522,21 @@ export default class extends Component {
 
   render() {
     const { tmpSkuProps } = this.state;
-    const { form, useDefaultButton = true } = this.props;
+    const { form, useDefaultButton = true, formItemLayout = {
+      labelCol: {
+        span: 6
+      },
+      wrapperCol: {
+        span: 18
+      }
+    },
+      label1 = '',
+      label2 = '',
+    } = this.props;
     const { getFieldDecorator } = form;
     return (
       <div>
-        <FormItem>
+        <FormItem label={label1} {...formItemLayout}>
           {tmpSkuProps.map((item, index) =>
             this._renderProps(item, index, getFieldDecorator)
           )}
@@ -541,7 +553,7 @@ export default class extends Component {
           )}
         </FormItem>
 
-        <FormItem>{this._renderSkuTable()}</FormItem>
+        <FormItem label={label2} {...formItemLayout}>{this._renderSkuTable()}</FormItem>
       </div>
     );
   }

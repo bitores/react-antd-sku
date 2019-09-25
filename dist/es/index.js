@@ -69,6 +69,20 @@ var defineProperty = function (obj, key, value) {
   return obj;
 };
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -592,72 +606,76 @@ var _class = function (_Component) {
             _Col,
             { span: 8 },
             React.createElement(
-              "div",
-              {
-                onMouseDown: function onMouseDown(e) {
-                  e.preventDefault();
-                  return false;
-                }
-              },
-              getFieldDecorator(singleProp.key, {
-                initialValue: singleProp.id,
-                rules: [{ required: true, message: "必填属性或删除" }]
-              })(React.createElement(
-                _Select,
+              FormItem,
+              null,
+              React.createElement(
+                "div",
                 {
-                  style: { width: "100%" },
-                  placeholder: "\u8BF7\u9009\u62E9\u5C5E\u6027",
-                  optionFilterProp: "children",
-                  showSearch: true,
-                  onChange: function onChange(v) {
-                    _this7.setCurrentProp(v, index, true);
-                  },
-                  dropdownRender: function dropdownRender(menu) {
-                    return React.createElement(
-                      "div",
-                      {
-                        onClick: function onClick() {
-                          return false;
-                        }
-                      },
-                      menu,
-                      React.createElement(_Divider, { style: { margin: "4px 0" } }),
-                      React.createElement(
+                  onMouseDown: function onMouseDown(e) {
+                    e.preventDefault();
+                    return false;
+                  }
+                },
+                getFieldDecorator(singleProp.key, {
+                  initialValue: singleProp.id,
+                  rules: [{ required: true, message: "必填属性或删除" }]
+                })(React.createElement(
+                  _Select,
+                  {
+                    style: { width: "100%" },
+                    placeholder: "\u8BF7\u9009\u62E9\u5C5E\u6027",
+                    optionFilterProp: "children",
+                    showSearch: true,
+                    onChange: function onChange(v) {
+                      _this7.setCurrentProp(v, index, true);
+                    },
+                    dropdownRender: function dropdownRender(menu) {
+                      return React.createElement(
                         "div",
                         {
-                          style: { padding: "8px", cursor: "pointer" },
-                          onClick: function onClick(e) {
-                            _this7.setState({
-                              editProp: {
-                                index: index,
-                                key: singleProp.key
-                              }
-                            }, function () {
-                              _this7.props.addProp && _this7.props.addProp(index);
-                            });
+                          onClick: function onClick() {
                             return false;
                           }
                         },
-                        React.createElement(_Icon, { type: "plus" }),
-                        " \u65B0\u589E"
-                      )
+                        menu,
+                        React.createElement(_Divider, { style: { margin: "4px 0" } }),
+                        React.createElement(
+                          "div",
+                          {
+                            style: { padding: "8px", cursor: "pointer" },
+                            onClick: function onClick(e) {
+                              _this7.setState({
+                                editProp: {
+                                  index: index,
+                                  key: singleProp.key
+                                }
+                              }, function () {
+                                _this7.props.addProp && _this7.props.addProp(index);
+                              });
+                              return false;
+                            }
+                          },
+                          React.createElement(_Icon, { type: "plus" }),
+                          " \u65B0\u589E"
+                        )
+                      );
+                    }
+                  },
+                  skuPropsList.map(function (prop) {
+                    return React.createElement(
+                      _Select.Option,
+                      {
+                        value: prop.id,
+                        key: prop.id + "_" + prop.propertyName,
+                        disabled: tmpSkuProps.some(function (item) {
+                          return item.id === prop.id;
+                        })
+                      },
+                      prop.propertyName
                     );
-                  }
-                },
-                skuPropsList.map(function (prop) {
-                  return React.createElement(
-                    _Select.Option,
-                    {
-                      value: prop.id,
-                      key: prop.id + "_" + prop.propertyName,
-                      disabled: tmpSkuProps.some(function (item) {
-                        return item.id === prop.id;
-                      })
-                    },
-                    prop.propertyName
-                  );
-                })
-              ))
+                  })
+                ))
+              )
             )
           ),
           React.createElement(
@@ -773,7 +791,20 @@ var _class = function (_Component) {
       var _props3 = this.props,
           form = _props3.form,
           _props3$useDefaultBut = _props3.useDefaultButton,
-          useDefaultButton = _props3$useDefaultBut === undefined ? true : _props3$useDefaultBut;
+          useDefaultButton = _props3$useDefaultBut === undefined ? true : _props3$useDefaultBut,
+          _props3$formItemLayou = _props3.formItemLayout,
+          formItemLayout = _props3$formItemLayou === undefined ? {
+        labelCol: {
+          span: 6
+        },
+        wrapperCol: {
+          span: 18
+        }
+      } : _props3$formItemLayou,
+          _props3$label = _props3.label1,
+          label1 = _props3$label === undefined ? '' : _props3$label,
+          _props3$label2 = _props3.label2,
+          label2 = _props3$label2 === undefined ? '' : _props3$label2;
       var getFieldDecorator = form.getFieldDecorator;
 
       return React.createElement(
@@ -781,7 +812,7 @@ var _class = function (_Component) {
         null,
         React.createElement(
           FormItem,
-          null,
+          _extends({ label: label1 }, formItemLayout),
           tmpSkuProps.map(function (item, index) {
             return _this8._renderProps(item, index, getFieldDecorator);
           }),
@@ -799,7 +830,7 @@ var _class = function (_Component) {
         ),
         React.createElement(
           FormItem,
-          null,
+          _extends({ label: label2 }, formItemLayout),
           this._renderSkuTable()
         )
       );

@@ -6,6 +6,16 @@
 <Sku
   ref={this.skuRef}
   form={form}
+  label1="规格属性"
+  label2="价格"
+  formItemLayout={{
+    labelCol: {
+      span: 4
+    },
+    wrapperCol: {
+      span: 20
+    }
+  }}
   useDefaultButton={false}
   skuPropsList={skuPropsList}
   skuPropVoList={propVoList}
